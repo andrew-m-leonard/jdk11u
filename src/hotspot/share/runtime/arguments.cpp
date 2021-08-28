@@ -2521,6 +2521,7 @@ jint Arguments::parse_each_vm_init_arg(const JavaVMInitArgs* args, bool* patch_m
           return JNI_ERR;
         }
 #endif // !INCLUDE_JVMTI
+printf("ADDING AGENT: %s\n", name);
         add_init_agent(name, options, is_absolute_path);
       }
     // -javaagent

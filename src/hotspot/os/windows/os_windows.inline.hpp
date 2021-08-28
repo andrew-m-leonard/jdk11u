@@ -42,6 +42,17 @@ inline void  os::dll_unload(void *lib) {
 }
 
 inline void* os::dll_lookup(void *lib, const char *name) {
+
+  printf("dll_lookup: \n");
+  if (lib == NULL) {
+    printf("dll_lookup: lib==NULL\n");
+  }
+  if (name == NULL) {
+    printf("dll_lookup: name == NULL\n");
+  } else {
+    printf("dll_lookup: name = %s\n", name);
+  }
+
   return (void*)::GetProcAddress((HMODULE)lib, name);
 }
 

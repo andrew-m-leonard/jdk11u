@@ -580,15 +580,33 @@ void* os::find_agent_function(AgentLibrary *agent_lib, bool check_lib,
   char *agent_function_name;
   size_t i;
 
+printf("find_agent_function:\n");
+
   // If checking then use the agent name otherwise test is_static_lib() to
   // see how to process this lookup
   lib_name = ((check_lib || agent_lib->is_static_lib()) ? agent_lib->name() : NULL);
+if (lib_name == NULL) {
+  printf("find_agent_function: lib_name==NULL\n");
+} else {
+  printf("find_agent_function: lib_name=%s\n", lib_name);
+}
+if (handle == NULL) {
+  printf("find_agent_function: handle==NULL\n");
+} else {
+  printf("find_agent_function: handle not NULL\n");
+}
   for (i = 0; i < syms_len; i++) {
     agent_function_name = build_agent_function_name(syms[i], lib_name, agent_lib->is_absolute_path());
     if (agent_function_name == NULL) {
+printf("find_agent_function: agent_function_name == NULL\n");
       break;
     }
     entryName = dll_lookup(handle, agent_function_name);
+if (entryName == NULL) {
+  printf("findagent: dll_lookup: NULL\n");
+} else {
+  printf("findagent: dll_lookup: not NULL\n");
+}
     FREE_C_HEAP_ARRAY(char, agent_function_name);
     if (entryName != NULL) {
       break;

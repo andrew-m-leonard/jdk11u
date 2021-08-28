@@ -1090,12 +1090,15 @@ void DebugOnCmdStartDCmd::execute(DCmdSource source, TRAPS) {
   jthread jt = JNIHandles::make_local(thread->threadObj());
   ThreadToNativeFromVM ttn(thread);
   const char *error = "Could not find jdwp agent.";
-
+ printf("DebugOnCmdStartDCmd\n");
   if (!dvc_start_ptr) {
+ printf("AGENTS:\n" );
     for (AgentLibrary* agent = Arguments::agents(); agent != NULL; agent = agent->next()) {
+ printf("AGENT: %s\n", agent->name());
       if ((strcmp("jdwp", agent->name()) == 0) && (dvc_start_ptr == NULL)) {
         char const* func = "debugInit_startDebuggingViaCommand";
         dvc_start_ptr = (debugInit_startDebuggingViaCommandPtr) os::find_agent_function(agent, false, &func, 1);
+  if (dvc_start_ptr) printf("AGENT got dvc\n"); else printf("AGENT NO dvc\n");
       }
     }
   }
